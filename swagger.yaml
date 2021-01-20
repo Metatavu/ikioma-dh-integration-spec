@@ -1,0 +1,46 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: Ikioma health service integrations
+security:
+  - bearerAuth: []
+paths:
+  /v1/system/ping:
+    get:
+      operationId: ping
+      summary: Replies with pong
+      description: Replies ping with pong
+      tags:
+        - System
+      responses:
+        "200":
+          description: Pong
+          content:
+            application/json:
+              schema:
+                type: string
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
