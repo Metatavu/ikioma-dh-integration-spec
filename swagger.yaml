@@ -16,15 +16,9 @@ paths:
         "200":
           description: Pong
           content:
-            application/json:
+            text/plain:
               schema:
                 type: string
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
 
 components:
   securitySchemes:
