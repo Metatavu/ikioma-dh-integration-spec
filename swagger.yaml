@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   version: 1.0.0
-  title: Ikioma health service integrations
+  title: Ikioma API-spec
 security:
   - bearerAuth: []
 paths:
@@ -20,15 +20,63 @@ paths:
               schema:
                 type: string
 
+  /patients/{userId}:
+    get:
+      summary: Replies with Patient object or error
+      description: Replies with Patient Object or error
+      tags:
+        - Patient
+      operationId: findPatient
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Found patient
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
+
   schemas:
     Error:
       type: object
+      description: Error object
       required:
         - code
         - message
@@ -38,3 +86,57 @@ components:
           format: int32
         message:
           type: string
+
+    Patient:
+      type: object
+      description: Patient API object
+      properties:
+        mobile:
+          $ref: "#/components/schemas/PhoneNumber"
+        telephone:
+          $ref: "#/components/schemas/PhoneNumber"
+        sms:
+          $ref: "#/components/schemas/PhoneNumber"
+        address:
+          $ref: "#/components/schemas/Address"
+        occupation:
+          description: The occupation of the patient
+          type: string
+        domicile:
+          description: The domicile (home municipality) of the patient
+          type: string
+        language:
+          $ref: "#/components/schemas/Language"
+
+    PhoneNumber:
+      type: object
+      description: Phone number object which can be used for mobile-, sms- and telephone numbers
+      properties:
+        areaCode:
+          description: Area code
+          type: string
+        number:
+          description: number
+          type: string
+
+    Address:
+      type: object
+      description: Address object that contains general patient address information
+      properties:
+        streetAddress:
+          description: Users street address
+          type: string
+        postCode:
+          description: Users postal code1
+          type: string
+        postOffice:
+          description: Users postal office
+          type: string
+
+    Language:
+      type: string
+      description: Available languages in ISO 639-1 format
+      enum:
+        - FI
+        - SV
+        - OTHER
