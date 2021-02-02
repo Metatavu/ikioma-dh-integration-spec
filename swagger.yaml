@@ -85,6 +85,7 @@ paths:
         - name: practitionerId
           in: query
           required: false
+          description: Encrypted practitioner ID
           schema:
             type: string
             format: encrypted-id
@@ -121,7 +122,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-                
+
   /practitioners:
     get:
       summary:  Lists practitioners
@@ -133,6 +134,7 @@ paths:
         - name: areaId
           in: query
           required: false
+          description: Encrypted practitioner ID
           schema:
             type: string
             format: encrypted-id
@@ -259,17 +261,17 @@ components:
         address:
           $ref: "#/components/schemas/Address"
         occupation:
+          type: string
           description: The occupation of the patient
-          type: string
         domicile:
-          description: The domicile (home municipality) of the patient
           type: string
+          description: The domicile (home municipality) of the patient
         language:
           $ref: "#/components/schemas/Language"
         employerId:
           type: string
-          format: encrypted-id
           description: Employer id if patient is eligible for occupational health care services
+          format: encrypted-id
 
     PhoneNumber:
       type: object
@@ -279,11 +281,11 @@ components:
         - number
       properties:
         areaCode:
+          type: string
           description: Area code
-          type: string
         number:
-          description: number
           type: string
+          description: Number
 
     Address:
       type: object
@@ -294,14 +296,14 @@ components:
         - postOffice
       properties:
         streetAddress:
+          type: string
           description: Users street address
-          type: string
         postCode:
+          type: string
           description: Users postal code1
-          type: string
         postOffice:
-          description: Users postal office
           type: string
+          description: Users postal office
 
     Language:
       type: string
