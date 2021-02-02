@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   version: 1.0.0
-  title: Ikioma health service integrations
+  title: Ikioma API-spec
 security:
   - bearerAuth: []
 paths:
@@ -20,15 +20,216 @@ paths:
               schema:
                 type: string
 
+  /patients/{patientId}:
+    get:
+      summary:  Finds a patient
+      description: Finds patient details by patient id
+      tags:
+        - Patient
+      operationId: findPatient
+      parameters:
+        - name: patientId
+          in: path
+          required: true
+          description: Encrypted patient ID
+          schema:
+            type: string
+            format: encrypted-id
+      responses:
+        "200":
+          description: Found patient
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+                
+  /medicalSpecialities:
+    get:
+      summary:  Lists medical specialities
+      description: Lists medical specialities
+      tags:
+        - MedicalSpecialities
+      operationId: listMedicalSpecialities
+      parameters:
+        - name: employerId
+          in: query
+          required: true
+          description: Encrypted employer ID
+          schema:
+            type: string
+            format: encrypted-id
+        - name: practitionerId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: encrypted-id
+      responses:
+        "200":
+          description: List of medical specialities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MedicalSpeciality'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+                
+  /practitioners:
+    get:
+      summary:  Lists practitioners
+      description: Lists practitioners
+      tags:
+        - Practitioners
+      operationId: listPractitioners
+      parameters:
+        - name: areaId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: encrypted-id
+      responses:
+        "200":
+          description: List of practitioners
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Practitioner'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /areas:
+    get:
+      summary:  Lists areas
+      description: Lists areas
+      tags:
+        - Areas
+      operationId: listAreas
+      parameters:
+        - name: employerId
+          description: Encrypted employer ID
+          in: query
+          required: false
+          schema:
+            type: string
+            format: encrypted-id
+      responses:
+        "200":
+          description: List of areas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Area'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
+
   schemas:
     Error:
       type: object
+      description: Error object
       required:
         - code
         - message
@@ -38,3 +239,127 @@ components:
           format: int32
         message:
           type: string
+
+    Patient:
+      type: object
+      description: Patient API object
+      required:
+        - id
+        - address
+      properties:
+        id:
+          type: string
+          format: encrypted-id
+        mobile:
+          $ref: "#/components/schemas/PhoneNumber"
+        telephone:
+          $ref: "#/components/schemas/PhoneNumber"
+        sms:
+          $ref: "#/components/schemas/PhoneNumber"
+        address:
+          $ref: "#/components/schemas/Address"
+        occupation:
+          description: The occupation of the patient
+          type: string
+        domicile:
+          description: The domicile (home municipality) of the patient
+          type: string
+        language:
+          $ref: "#/components/schemas/Language"
+        employerId:
+          type: string
+          format: encrypted-id
+          description: Employer id if patient is eligible for occupational health care services
+
+    PhoneNumber:
+      type: object
+      description: Phone number object which can be used for mobile-, sms- and telephone numbers
+      required:
+        - areaCode
+        - number
+      properties:
+        areaCode:
+          description: Area code
+          type: string
+        number:
+          description: number
+          type: string
+
+    Address:
+      type: object
+      description: Address object that contains general patient address information
+      required:
+        - streetAddress
+        - postCode
+        - postOffice
+      properties:
+        streetAddress:
+          description: Users street address
+          type: string
+        postCode:
+          description: Users postal code1
+          type: string
+        postOffice:
+          description: Users postal office
+          type: string
+
+    Language:
+      type: string
+      description: Available languages in ISO 639-1 format
+      enum:
+        - FI
+        - SV
+
+    MedicalSpeciality:
+      type: object
+      description: Medical speciality object that contains id and localized name
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: encrypted-id
+        name:
+          $ref: "#/components/schemas/LocalizedValue"
+
+    LocalizedValue:
+      type: object
+      description: Object that contains localized information
+      required:
+        - fi
+        - sv
+        - en
+      properties:
+        fi:
+          type: string
+        sv:
+          type: string
+        en:
+          type: string
+        
+    Practitioner:
+      type: object
+      description: Practitioner object that contains id and name
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: encrypted-id
+        name:
+          type: string
+
+    Area:
+      type: object
+      description: Area object that contains id and localized name
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: encrypted-id
+        name:
+          $ref: "#/components/schemas/LocalizedValue"
