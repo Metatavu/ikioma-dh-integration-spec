@@ -22,8 +22,8 @@ paths:
 
   /patients/{userId}:
     get:
-      summary: Replies with Patient object or error
-      description: Replies with Patient Object or error
+      summary:  Finds a patient
+      description: Finds patient details by user id
       tags:
         - Patient
       operationId: findPatient
