@@ -300,7 +300,7 @@ components:
           description: Users street address
         postCode:
           type: string
-          description: Users postal code1
+          description: Users postal code
         postOffice:
           type: string
           description: Users postal office
