@@ -20,7 +20,7 @@ paths:
               schema:
                 type: string
 
-  /patients/{patientId}:
+  /v1/patients/{patientId}:
     get:
       summary:  Finds a patient
       description: Finds patient details by patient id
@@ -67,7 +67,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
                 
-  /medicalSpecialities:
+  /v1/medicalSpecialities:
     get:
       summary:  Lists medical specialities
       description: Lists medical specialities
@@ -123,7 +123,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /practitioners:
+  /v1/practitioners:
     get:
       summary:  Lists practitioners
       description: Lists practitioners
@@ -172,7 +172,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /areas:
+  /v1/areas:
     get:
       summary:  Lists areas
       description: Lists areas
