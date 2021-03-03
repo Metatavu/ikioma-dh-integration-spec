@@ -244,12 +244,6 @@ paths:
         - Clinics
       operationId: listClinics
       parameters:
-        - name: isOccupational
-          in: query
-          required: true
-          description: Search for clinics that have health care agreement of the company
-          schema:
-            type: boolean
         - name: employerId
           in: query
           required: false
