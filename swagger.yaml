@@ -77,12 +77,6 @@ paths:
         - MedicalSpecialities
       operationId: listMedicalSpecialities
       parameters:
-        - name: isOccupational
-          in: query
-          required: true
-          description: Search for clinics that have health care agreement of the company
-          schema:
-            type: boolean
         - name: clinicId
           in: query
           required: false
