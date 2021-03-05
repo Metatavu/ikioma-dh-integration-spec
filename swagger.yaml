@@ -143,10 +143,39 @@ paths:
         - name: areaId
           in: query
           required: false
-          description: Encrypted practitioner ID
+          description: Encrypted area ID
           schema:
             type: string
             format: encrypted-id
+        - name: clinicId
+          in: query
+          required: false
+          description: Encrypted clinic ID
+          schema:
+            type: string
+            format: encrypted-id
+        - name: specialtyId
+          in: query
+          required: false
+          description: Encrypted specialty ID
+          schema:
+            type: string
+            format: encrypted-id
+        - name: employerId
+          in: query
+          required: false
+          description: Encrypted employer ID
+          schema:
+            type: string
+            format: encrypted-id
+        - name: appointmentTimeCodes
+          in: query
+          required: false
+          description: List of appointment worktime codes
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         "200":
           description: List of practitioners
@@ -533,6 +562,16 @@ components:
           type: string
           format: encrypted-id
         name:
+          type: string
+        finnish:
+          type: boolean
+        swedish:
+          type: boolean
+        otherLang:
+          type: array
+          items:
+            type: string
+        gender:
           type: string
 
     Area:
