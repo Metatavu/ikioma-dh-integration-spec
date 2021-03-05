@@ -2,8 +2,10 @@ openapi: 3.0.3
 info:
   version: 1.0.0
   title: Ikioma API-spec
+
 security:
   - bearerAuth: []
+
 paths:
   /v1/system/ping:
     get:
@@ -66,7 +68,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-                
+
   /v1/medicalSpecialities:
     get:
       summary:  Lists medical specialities
@@ -75,9 +77,16 @@ paths:
         - MedicalSpecialities
       operationId: listMedicalSpecialities
       parameters:
+        - name: clinicId
+          in: query
+          required: false
+          description: Encrypted clinic ID
+          schema:
+            type: string
+            format: encrypted-id
         - name: employerId
           in: query
-          required: true
+          required: false
           description: Encrypted employer ID
           schema:
             type: string
@@ -221,6 +230,179 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /v1/clinics:
+    get:
+      summary:  Lists clinics
+      description: Lists clinics
+      tags:
+        - Clinics
+      operationId: listClinics
+      parameters:
+        - name: employerId
+          in: query
+          required: false
+          description: Employer id if patient is eligible for occupational health care services
+          schema:
+            type: string
+            format: encrypted-id
+        - name: areaId
+          in: query
+          required: false
+          description: Encrypted practitioner ID
+          schema:
+            type: string
+            format: encrypted-id
+        - name: specialityId
+          in: query
+          required: false
+          description: Encrypted speciality ID
+          schema:
+            type: string
+            format: encrypted-id
+        - name: practitionerId
+          in: query
+          required: false
+          description: Encrypted practitioner ID
+          schema:
+            type: string
+            format: encrypted-id
+      responses:
+        "200":
+          description: List of clinics
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Clinic'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /v1/appointments:
+    get:
+      summary:  Lists appointments
+      description: Lists appointments
+      tags:
+        - Appointments
+      operationId: listAppointments
+      parameters:
+        - name: isOccupational
+          in: query
+          required: true
+          description: Search for clinics that have health care agreement of the company
+          schema:
+            type: boolean
+        - name: areaId
+          in: query
+          required: true
+          description: Encrypted practitioner ID
+          schema:
+            type: string
+            format: encrypted-id
+        - name: clinicId
+          in: query
+          required: true
+          description: Encrypted clinic ID
+          schema:
+            type: string
+            format: encrypted-id
+        - name: medicalSpecialityId
+          in: query
+          required: true
+          description: Encrypted clinic ID
+          schema:
+            type: string
+            format: encrypted-id
+        - name: practitionerId
+          in: query
+          required: false
+          description: Encrypted practitioner ID
+          schema:
+            type: string
+            format: encrypted-id
+        - name: startDate
+          in: query
+          required: true
+          description: From which date onwards the search is made
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          required: true
+          description: Until which date the search is made
+          schema:
+            type: string
+            format: date
+        - name: startTime
+          in: query
+          required: true
+          description: From which time of day onwards the available appointments are searched each day
+          schema:
+            type: string
+        - name: endTime
+          in: query
+          required: true
+          description: Until which time of day the available appointments are searched each day.
+          schema:
+            type: string
+
+      responses:
+        "200":
+          description: List of appointments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Practitioner'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 components:
   securitySchemes:
     bearerAuth:
@@ -339,7 +521,7 @@ components:
           type: string
         en:
           type: string
-        
+
     Practitioner:
       type: object
       description: Practitioner object that contains id and name
@@ -365,3 +547,55 @@ components:
           format: encrypted-id
         name:
           $ref: "#/components/schemas/LocalizedValue"
+
+    Clinic:
+      type: object
+      description: Clinic object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: encrypted-id
+        name:
+          $ref: "#/components/schemas/LocalizedValue"
+        address:
+          $ref: "#/components/schemas/Address"
+        phoneNumber:
+          type: string
+          description: Phone number of the clinic
+
+    Appointment:
+      type: object
+      description: Appointment API object
+      required:
+        - id
+        - date
+        - length
+        - webCode
+      properties:
+        id:
+          type: string
+          format: encrypted-id
+          description: Unique appointment ID
+        date:
+          type: string
+          format: date-time
+          description: The date and time of available appointment
+        length:
+          type: integer
+          format: int32
+          description: Appointment length in minutes
+        webCode:
+          type: string
+          description: Web code which can be used to fetch data about the appointment or cancel it
+        description:
+          type: string
+          description: Appointment description
+        roomName:
+          type: string
+          description: Appointment room name
+        roomNumber:
+          type: string
+          description: Appointment room number
