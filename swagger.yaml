@@ -171,7 +171,7 @@ paths:
         - name: appointmentTimeCodes
           in: query
           required: false
-          description: List of appointment  worktime codes
+          description: List of appointment worktime codes
           schema:
             type: array
             items:
