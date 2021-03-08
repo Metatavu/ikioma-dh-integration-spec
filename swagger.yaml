@@ -337,12 +337,13 @@ paths:
         - Appointments
       operationId: listAppointments
       parameters:
-        - name: isOccupational
+        - name: employerId
           in: query
-          required: true
-          description: Search for clinics that have health care agreement of the company
+          required: false
+          description: Employer id if patient is eligible for occupational health care services
           schema:
-            type: boolean
+            type: string
+            format: encrypted-id
         - name: areaId
           in: query
           required: true
@@ -406,7 +407,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Practitioner'
+                  $ref: '#/components/schemas/Appointment'
         "400":
           description: Invalid request was sent to the server
           content:
@@ -630,11 +631,9 @@ components:
           type: string
           description: Web code which can be used to fetch data about the appointment or cancel it
         description:
-          type: string
-          description: Appointment description
+          $ref: "#/components/schemas/LocalizedValue"
         roomName:
-          type: string
-          description: Appointment room name
+          $ref: "#/components/schemas/LocalizedValue"
         roomNumber:
           type: string
           description: Appointment room number
