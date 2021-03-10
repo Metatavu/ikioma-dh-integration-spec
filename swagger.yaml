@@ -378,14 +378,12 @@ paths:
           description: From which date onwards the search is made
           schema:
             type: string
-            format: date
         - name: endDate
           in: query
           required: true
           description: Until which date the search is made
           schema:
             type: string
-            format: date
         - name: startTime
           in: query
           required: true
