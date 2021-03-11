@@ -295,6 +295,14 @@ paths:
           schema:
             type: string
             format: encrypted-id
+        - name: appointmentTimeCodes
+          in: query
+          required: false
+          description: List of appointment worktime codes
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         "200":
           description: List of clinics
