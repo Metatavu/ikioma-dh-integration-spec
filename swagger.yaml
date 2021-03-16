@@ -627,7 +627,6 @@ components:
           description: Unique appointment ID
         date:
           type: string
-          format: date-time
           description: The date and time of available appointment
         length:
           type: integer
