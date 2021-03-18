@@ -106,7 +106,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/MedicalSpeciality'
+                  $ref: '#/components/schemas/MedicalSpecialty'
         "400":
           description: Invalid request was sent to the server
           content:
@@ -281,10 +281,10 @@ paths:
           schema:
             type: string
             format: encrypted-id
-        - name: specialityId
+        - name: specialtyId
           in: query
           required: false
-          description: Encrypted speciality ID
+          description: Encrypted specialty ID
           schema:
             type: string
             format: encrypted-id
@@ -358,7 +358,7 @@ paths:
           schema:
             type: string
             format: encrypted-id
-        - name: medicalSpecialityId
+        - name: medicalSpecialtyId
           in: query
           required: true
           description: Encrypted clinic ID
@@ -522,9 +522,9 @@ components:
         - FI
         - SV
 
-    MedicalSpeciality:
+    MedicalSpecialty:
       type: object
-      description: Medical speciality object that contains id and localized name
+      description: Medical specialty object that contains id and localized name
       required:
         - id
         - name
@@ -617,6 +617,18 @@ components:
           type: string
           format: encrypted-id
           description: Unique appointment ID
+        specialtyId:
+          type: string
+          format: encrypted-id
+          description: Encrypted specialty ID
+        practitionerId:
+          type: string
+          format: encrypted-id
+          description: Encrypted area ID
+        clinicId:
+          type: string
+          format: encrypted-id
+          description: Encrypted clinic ID
         date:
           type: string
           description: The date and time of available appointment
