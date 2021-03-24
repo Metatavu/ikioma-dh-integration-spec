@@ -337,6 +337,11 @@ paths:
         - Appointments
       operationId: listAppointments
       parameters:
+        - name: status
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/AppointmentStatus"
         - name: employerId
           in: query
           required: false
@@ -396,7 +401,6 @@ paths:
           description: Until which time of day the available appointments are searched each day.
           schema:
             type: string
-
       responses:
         "200":
           description: List of appointments
@@ -617,6 +621,8 @@ components:
           type: string
           format: encrypted-id
           description: Unique appointment ID
+        status:
+          $ref: "#/components/schemas/AppointmentStatus"
         specialtyId:
           type: string
           format: encrypted-id
@@ -632,6 +638,7 @@ components:
         date:
           type: string
           description: The date and time of available appointment
+          format: date-time
         length:
           type: integer
           format: int32
@@ -646,3 +653,10 @@ components:
         roomNumber:
           type: string
           description: Appointment room number
+
+    AppointmentStatus:
+      type: string
+      enum:
+        - AVAILABLE
+        - LOCKED
+        - RESERVED
