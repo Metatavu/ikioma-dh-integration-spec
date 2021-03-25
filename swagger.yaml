@@ -331,7 +331,7 @@ paths:
 
   /v1/appointments:
     get:
-      summary:  Lists appointments
+      summary: Lists appointments
       description: Lists appointments
       tags:
         - Appointments
@@ -398,6 +398,53 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Appointment'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /v1/appointments/{appointmentId}:
+    get:
+      summary: Find appointment
+      description: Find appointment
+      tags:
+        - Appointments
+      operationId: findAppointment
+      parameters:
+        - name: appointmentId
+          in: path
+          required: true
+          description: Appointment id
+          schema:
+            type: string
+            format: encrypted-id
+      responses:
+        "200":
+          description: Found appointment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appointment'
         "400":
           description: Invalid request was sent to the server
           content:
