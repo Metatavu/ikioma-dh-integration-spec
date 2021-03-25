@@ -377,28 +377,16 @@ paths:
           schema:
             type: string
             format: encrypted-id
-        - name: startDate
+        - name: startTime
           in: query
           required: true
           description: From which date onwards the search is made
           schema:
             type: string
-        - name: endDate
-          in: query
-          required: true
-          description: Until which date the search is made
-          schema:
-            type: string
-        - name: startTime
-          in: query
-          required: true
-          description: From which time of day onwards the available appointments are searched each day
-          schema:
-            type: string
         - name: endTime
           in: query
           required: true
-          description: Until which time of day the available appointments are searched each day.
+          description: Until which date the search is made
           schema:
             type: string
       responses:
