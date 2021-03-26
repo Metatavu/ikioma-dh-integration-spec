@@ -33,10 +33,10 @@ paths:
         - name: patientId
           in: path
           required: true
-          description: Encrypted patient ID
+          description: User keycloak ID
           schema:
             type: string
-            format: encrypted-id
+            format: uuid
       responses:
         "200":
           description: Found patient
@@ -459,9 +459,6 @@ components:
         - id
         - address
       properties:
-        id:
-          type: string
-          format: encrypted-id
         mobile:
           $ref: "#/components/schemas/PhoneNumber"
         telephone:
