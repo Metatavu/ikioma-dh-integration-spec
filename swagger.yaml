@@ -331,12 +331,17 @@ paths:
 
   /v1/appointments:
     get:
-      summary:  Lists appointments
+      summary: Lists appointments
       description: Lists appointments
       tags:
         - Appointments
       operationId: listAppointments
       parameters:
+        - name: status
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/AppointmentStatus"
         - name: employerId
           in: query
           required: false
@@ -372,31 +377,18 @@ paths:
           schema:
             type: string
             format: encrypted-id
-        - name: startDate
+        - name: startTime
           in: query
           required: true
           description: From which date onwards the search is made
           schema:
             type: string
-        - name: endDate
+        - name: endTime
           in: query
           required: true
           description: Until which date the search is made
           schema:
             type: string
-        - name: startTime
-          in: query
-          required: true
-          description: From which time of day onwards the available appointments are searched each day
-          schema:
-            type: string
-        - name: endTime
-          in: query
-          required: true
-          description: Until which time of day the available appointments are searched each day.
-          schema:
-            type: string
-
       responses:
         "200":
           description: List of appointments
@@ -406,6 +398,115 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Appointment'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /v1/appointments/{appointmentId}:
+    get:
+      summary: Find appointment
+      description: Find appointment
+      tags:
+        - Appointments
+      operationId: findAppointment
+      parameters:
+        - name: appointmentId
+          in: path
+          required: true
+          description: Appointment id
+          schema:
+            type: string
+            format: encrypted-id
+      responses:
+        "200":
+          description: Found appointment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appointment'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      summary: Update appointment
+      description: Update appointment
+      tags:
+        - Appointments
+      operationId: updateAppointment
+      requestBody:
+        description: Request payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Appointment'
+      parameters:
+        - name: appointmentId
+          in: path
+          required: true
+          description: Appointment id
+          schema:
+            type: string
+            format: encrypted-id
+        - name: phoneNumber
+          in: query
+          description: Contact phone number. Used only when updating to RESERVED
+          schema:
+            type: string
+        - name: cancelReason
+          in: query
+          description: Cancel reason. Required when updating RESERVED to AVAILABLE
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Found appointment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appointment'
         "400":
           description: Invalid request was sent to the server
           content:
@@ -614,6 +715,8 @@ components:
           type: string
           format: encrypted-id
           description: Unique appointment ID
+        status:
+          $ref: "#/components/schemas/AppointmentStatus"
         specialtyId:
           type: string
           format: encrypted-id
@@ -629,6 +732,7 @@ components:
         date:
           type: string
           description: The date and time of available appointment
+          format: date-time
         length:
           type: integer
           format: int32
@@ -643,3 +747,10 @@ components:
         roomNumber:
           type: string
           description: Appointment room number
+
+    AppointmentStatus:
+      type: string
+      enum:
+        - AVAILABLE
+        - LOCKED
+        - RESERVED
