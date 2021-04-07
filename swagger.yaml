@@ -117,6 +117,52 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /v1/patients/{patientId}/exists:
+    get:
+      summary:  Finds a patient
+      description: Finds patient details by patient id
+      tags:
+        - Patient
+      parameters:
+        - name: patientId
+          in: path
+          required: true
+          description: User keycloak ID
+          schema:
+            type: string
+            format: uuid
+      operationId: patientExists
+      responses:
+        "200":
+          description: Patient status
+          content:
+            application/json:
+              schema:
+                type: boolean
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 
   /v1/medicalSpecialities:
     get:
