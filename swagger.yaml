@@ -118,8 +118,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
     head:
-      summary:  Finds a patient
-      description: Finds patient details by patient id
+      summary:  Finds a patient headers
+      description: Finds patient request headers by patient id
       tags:
         - Patient
       parameters:
