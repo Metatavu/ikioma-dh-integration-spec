@@ -615,7 +615,7 @@ paths:
         - Prescriptions
       operationId: listPrescriptions
       parameters:
-        - name: count
+        - name: maxResults
           in: query
           required: false
           description: If this is given only the given amount of latest prescriptions are retrieved
@@ -624,18 +624,18 @@ paths:
             format: int32
         - name: startTime
           in: query
-          required: true
-          description: From which date onwards the search is made
+          required: false
+          description: From which date onwards the search is made. Includes the given date
           schema:
             type: string
-            format: date-time
+            format: date
         - name: endTime
           in: query
-          required: true
-          description: Until which date the search is made
+          required: false
+          description: Until which date the search is made. Includes the given date
           schema:
             type: string
-            format: date-time
+            format: date
       responses:
         "200":
           description: Patient prescriptions
@@ -901,7 +901,7 @@ components:
       properties:
         prescriptionDate:
           type: string
-          format: date-time
+          format: date
           description: Prescription date
         prescriber:
           $ref: "#/components/schemas/Practitioner"
@@ -913,5 +913,5 @@ components:
           description: Second prescription description
         validUntil:
           type: string
-          format: date-time
+          format: date
           description: Valid until date
