@@ -642,7 +642,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Prescription'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Prescription'
         "400":
           description: Invalid request was sent to the server
           content:
