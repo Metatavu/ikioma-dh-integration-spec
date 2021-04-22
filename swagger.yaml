@@ -897,8 +897,6 @@ components:
       description: Prescription object
       required:
         - prescriptionDate
-        - prescriber
-        - description
         - validUntil
       properties:
         prescriptionDate:
