@@ -425,21 +425,21 @@ paths:
             format: encrypted-id
         - name: areaId
           in: query
-          required: true
+          required: false
           description: Encrypted practitioner ID
           schema:
             type: string
             format: encrypted-id
         - name: clinicId
           in: query
-          required: true
+          required: false
           description: Encrypted clinic ID
           schema:
             type: string
             format: encrypted-id
         - name: medicalSpecialtyId
           in: query
-          required: true
+          required: false
           description: Encrypted clinic ID
           schema:
             type: string
