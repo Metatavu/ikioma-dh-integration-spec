@@ -628,14 +628,12 @@ paths:
           description: From which date onwards the search is made. Includes the given date
           schema:
             type: string
-            format: date
         - name: endTime
           in: query
           required: false
           description: Until which date the search is made. Includes the given date
           schema:
             type: string
-            format: date
       responses:
         "200":
           description: Patient prescriptions
