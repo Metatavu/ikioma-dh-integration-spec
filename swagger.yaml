@@ -71,6 +71,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+
   /v1/patients/{patientId}:
     get:
       summary:  Finds a patient
@@ -245,7 +246,7 @@ paths:
         - name: appointmentTimeCodes
           in: query
           required: false
-          description: List of appointment worktime codes
+          description: List of appointment work time codes
           schema:
             type: array
             items:
@@ -606,6 +607,67 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /v1/prescriptions:
+    get:
+      summary: Get patients prescriptions
+      description: Gets patients prescriptions
+      tags:
+        - Prescriptions
+      operationId: listPrescriptions
+      parameters:
+        - name: maxResults
+          in: query
+          required: false
+          description: If this is given only the given amount of latest prescriptions are retrieved
+          schema:
+            type: integer
+            format: int32
+        - name: startTime
+          in: query
+          required: false
+          description: From which date onwards the search is made. Includes the given date
+          schema:
+            type: string
+        - name: endTime
+          in: query
+          required: false
+          description: Until which date the search is made. Includes the given date
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Patient prescriptions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Prescription'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 components:
   securitySchemes:
     bearerAuth:
@@ -827,3 +889,27 @@ components:
         - AVAILABLE
         - LOCKED
         - RESERVED
+
+    Prescription:
+      type: object
+      description: Prescription object
+      required:
+        - prescriptionDate
+        - validUntil
+      properties:
+        prescriptionDate:
+          type: string
+          format: date
+          description: Prescription date
+        prescriber:
+          $ref: "#/components/schemas/Practitioner"
+        description:
+          type: string
+          description: Prescription description
+        secondDescription:
+          type: string
+          description: Second prescription description
+        validUntil:
+          type: string
+          format: date
+          description: Valid until date
