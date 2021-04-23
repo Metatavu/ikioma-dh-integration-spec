@@ -47,6 +47,10 @@ paths:
       responses:
         "200":
           description: Creation was successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
         "400":
           description: Invalid request was sent to the server
           content:
