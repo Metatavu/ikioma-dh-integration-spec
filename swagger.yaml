@@ -632,7 +632,7 @@ paths:
           description: Patient id
           schema:
             type: string
-            format: encrypted-id
+            format: uuid
       responses:
         "200":
           description: Information about attending the appointment
