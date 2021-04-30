@@ -147,6 +147,58 @@ paths:
           description: Forbidden
         "500":
           description: Internal server error
+    put:
+      summary: updates patient data
+      description: updates patient data
+      tags:
+        - Patient
+      operationId: updatePatient
+      parameters:
+        - name: patientId
+          in: path
+          required: true
+          description: User keycloak ID
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: New patient data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Patient'
+      responses:
+        "200":
+          description: Update was successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 
   /v1/medicalSpecialities:
     get:
