@@ -981,14 +981,14 @@ components:
         - roomName
         - roomArrivalInfo
       properties:
-        clinicId:
+        clinicName:
           type: string
-          format: encrypted-id
-          description: Encrypted clinic ID
+        clinicAddress:
+          $ref: "#/components/schemas/Address"
         roomName:
           $ref: "#/components/schemas/LocalizedValue"
           description: Room name
         roomArrivalInfo:
-          $ref: "#/components/schemas/LocalizedValue"
+          $ref: string
           description: Arrival information for room
 
