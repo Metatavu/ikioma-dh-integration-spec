@@ -161,6 +161,25 @@ paths:
           schema:
             type: string
             format: uuid
+        - name: allowMarketingMail
+          in: query
+          required: false
+          description: Does the patient want to receive marketing material via mail
+          schema:
+            type: boolean
+        - name: allowTreatmentInstructionsMail
+          in: query
+          required: false
+          description: Does the patient want to receive treatment instructions via mail
+          schema:
+            type: boolean
+        - name: allowBookingSms
+          in: query
+          required: false
+          description: Does the patient want to receive appointment booking confirmation sms
+          schema:
+            type: boolean
+
       requestBody:
         description: New patient data
         required: true
