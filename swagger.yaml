@@ -997,5 +997,5 @@ components:
           description: vaccine batch
         vaccineDosage:
           type: number
-          format: float
+          format: double
           description: vaccine dosage
