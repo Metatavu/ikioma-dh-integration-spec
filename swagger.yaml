@@ -147,6 +147,76 @@ paths:
           description: Forbidden
         "500":
           description: Internal server error
+    put:
+      summary: updates patient data
+      description: updates patient data
+      tags:
+        - Patient
+      operationId: updatePatient
+      parameters:
+        - name: patientId
+          in: path
+          required: true
+          description: User keycloak ID
+          schema:
+            type: string
+            format: uuid
+        - name: allowMarketingMail
+          in: query
+          required: false
+          description: Does the patient want to receive marketing material via mail
+          schema:
+            type: boolean
+        - name: allowTreatmentInstructionsMail
+          in: query
+          required: false
+          description: Does the patient want to receive treatment instructions via mail
+          schema:
+            type: boolean
+        - name: allowBookingSms
+          in: query
+          required: false
+          description: Does the patient want to receive appointment booking confirmation sms
+          schema:
+            type: boolean
+      requestBody:
+        description: New patient data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Patient'
+      responses:
+        "200":
+          description: Update was successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 
   /v1/medicalSpecialities:
     get:
@@ -611,6 +681,53 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /v1/appointments/{appointmentId}/patient:
+    post:
+      summary: Book patient arrival
+      description: Books patient arrivals for selected appointment
+      tags:
+        - Appointments
+      operationId: bookAppointmentArrival
+      parameters:
+        - name: appointmentId
+          in: path
+          required: true
+          description: Appointment id
+          schema:
+            type: string
+            format: encrypted-id
+      responses:
+        "200":
+          description: Information about attending the appointment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppointmentArrival'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
   /v1/prescriptions:
     get:
       summary: Get patients prescriptions
@@ -999,3 +1116,24 @@ components:
           type: number
           format: double
           description: vaccine dosage
+
+    AppointmentArrival:
+      type: object
+      description: Information for patient arrival for the appointment
+      required:
+        - clinicId
+        - roomName
+        - roomArrivalInfo
+      properties:
+        clinicName:
+          type: string
+          description: Clinic name
+        clinicAddress:
+          $ref: "#/components/schemas/Address"
+        roomName:
+          $ref: "#/components/schemas/LocalizedValue"
+          description: Room name
+        roomArrivalInfo:
+          $ref: string
+          description: Arrival information for room
+
