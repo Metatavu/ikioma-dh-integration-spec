@@ -1078,44 +1078,44 @@ components:
 
     Vaccination:
       type: object
-      description: vaccination data
+      description: Vaccination data
       properties:
         vaccinationDate:
           type: string
           format: date
-          description: date when vaccination was given
+          description: Date when vaccination was given
         vaccinationName:
           type: string
           description: Name of vaccination
         validUntil:
           type: string
           format: date
-          description: until which date vaccination is valid
+          description: Until which date vaccination is valid
         vaccinator:
           type: string
-          description: the user who administered vaccination
+          description: The user who administered vaccination
         vaccinationSite:
           type: string
-          description: location of vaccination on the body
+          description: Location of vaccination on the body
         vaccinationMethod:
           type: string
-          description: vaccination method
+          description: Vaccination method
         vaccineCode:
           type: string
-          description: vaccine code
+          description: Vaccine code
         vaccineATCCode:
           type: string
-          description: vaccine ATC code
+          description: Vaccine ATC code
         vaccineSeries:
           type: string
-          description: vaccine series
+          description: Vaccine series
         vaccineBatch:
           type: string
-          description: vaccine batch
+          description: Vaccine batch
         vaccineDosage:
           type: number
           format: double
-          description: vaccine dosage
+          description: Vaccine dosage
 
     AppointmentArrival:
       type: object
