@@ -611,10 +611,10 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /v1/appointments/{appointmentId}/{patientId}:
+  /v1/appointments/{appointmentId}/patient:
     post:
       summary: Book patient arrival
-      description: Books patient arrial for selected appointment
+      description: Books patient arrivals for selected appointment
       tags:
         - Appointments
       operationId: bookAppointmentArrival
@@ -626,13 +626,6 @@ paths:
           schema:
             type: string
             format: encrypted-id
-        - name: patientId
-          in: path
-          required: true
-          description: Patient id
-          schema:
-            type: string
-            format: uuid
       responses:
         "200":
           description: Information about attending the appointment
@@ -664,7 +657,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-
 
   /v1/prescriptions:
     get:
@@ -975,7 +967,7 @@ components:
 
     AppointmentArrival:
       type: object
-      description: info for patient arrival for the appointment
+      description: Information for patient arrival for the appointment
       required:
         - clinicId
         - roomName
@@ -983,6 +975,7 @@ components:
       properties:
         clinicName:
           type: string
+          description: Clinic name
         clinicAddress:
           $ref: "#/components/schemas/Address"
         roomName:
