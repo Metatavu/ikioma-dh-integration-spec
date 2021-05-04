@@ -789,6 +789,47 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /v1/vaccinations:
+    get:
+      summary: Get patients vaccinations
+      description: Gets patients vaccinations
+      tags:
+        - Vaccinations
+      operationId: listVaccinations
+      responses:
+        "200":
+          description: Patient prescriptions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vaccination'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 components:
   securitySchemes:
     bearerAuth:
@@ -1035,6 +1076,47 @@ components:
           format: date
           description: Valid until date
 
+    Vaccination:
+      type: object
+      description: Vaccination data
+      properties:
+        vaccinationDate:
+          type: string
+          format: date
+          description: Date when vaccination was given
+        vaccinationName:
+          type: string
+          description: Name of vaccination
+        validUntil:
+          type: string
+          format: date
+          description: Until which date vaccination is valid
+        vaccinator:
+          type: string
+          description: The user who administered vaccination
+        vaccinationSite:
+          type: string
+          description: Location of vaccination on the body
+        vaccinationMethod:
+          type: string
+          description: Vaccination method
+        vaccineCode:
+          type: string
+          description: Vaccine code
+        vaccineATCCode:
+          type: string
+          description: Vaccine ATC code
+        vaccineSeries:
+          type: string
+          description: Vaccine series
+        vaccineBatch:
+          type: string
+          description: Vaccine batch
+        vaccineDosage:
+          type: number
+          format: double
+          description: Vaccine dosage
+
     AppointmentArrival:
       type: object
       description: Information for patient arrival for the appointment
@@ -1054,3 +1136,4 @@ components:
         roomArrivalInfo:
           $ref: string
           description: Arrival information for room
+
