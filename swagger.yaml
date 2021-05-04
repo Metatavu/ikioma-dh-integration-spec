@@ -179,7 +179,6 @@ paths:
           description: Does the patient want to receive appointment booking confirmation sms
           schema:
             type: boolean
-
       requestBody:
         description: New patient data
         required: true
