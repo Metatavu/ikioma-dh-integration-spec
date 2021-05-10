@@ -486,46 +486,6 @@ paths:
         - Appointments
       operationId: listAppointments
       parameters:
-        - name: status
-          in: query
-          required: true
-          schema:
-            $ref: "#/components/schemas/AppointmentStatus"
-        - name: employerId
-          in: query
-          required: false
-          description: Employer id if patient is eligible for occupational health care services
-          schema:
-            type: string
-            format: encrypted-id
-        - name: areaId
-          in: query
-          required: false
-          description: Encrypted practitioner ID
-          schema:
-            type: string
-            format: encrypted-id
-        - name: clinicId
-          in: query
-          required: false
-          description: Encrypted clinic ID
-          schema:
-            type: string
-            format: encrypted-id
-        - name: medicalSpecialtyId
-          in: query
-          required: false
-          description: Encrypted clinic ID
-          schema:
-            type: string
-            format: encrypted-id
-        - name: practitionerId
-          in: query
-          required: false
-          description: Encrypted practitioner ID
-          schema:
-            type: string
-            format: encrypted-id
         - name: startTime
           in: query
           required: true
