@@ -856,6 +856,8 @@ components:
       description: Patient API object
       required:
         - address
+        - allowsOccupationalInfo
+        - allowsCommonRegistry
       properties:
         mobile:
           $ref: "#/components/schemas/PhoneNumber"
@@ -877,6 +879,12 @@ components:
           type: string
           description: Employer id if patient is eligible for occupational health care services
           format: encrypted-id
+        allowsOccupationalInfo:
+          type: boolean
+          description: True if patient allows showing occupational information
+        allowsCommonRegistry:
+          type: boolean
+          description: True if patient allows showing own medical records
 
     PhoneNumber:
       type: object
