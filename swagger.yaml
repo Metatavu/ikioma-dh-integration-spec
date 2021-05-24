@@ -856,8 +856,6 @@ components:
       description: Patient API object
       required:
         - address
-        - allowsOccupationalInfo
-        - allowsCommonRegistry
       properties:
         mobile:
           $ref: "#/components/schemas/PhoneNumber"
