@@ -873,6 +873,10 @@ components:
           description: The domicile (home municipality) of the patient
         language:
           $ref: "#/components/schemas/Language"
+        employerId:
+          type: string
+          description: Employer id if patient is eligible for occupational health care services
+          format: encrypted-id
         allowsOccupationalInfo:
           type: boolean
           description: True if patient allows showing occupational information
