@@ -1012,7 +1012,6 @@ components:
         - id
         - date
         - length
-        - webCode
       properties:
         id:
           type: string
