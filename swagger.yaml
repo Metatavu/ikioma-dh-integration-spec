@@ -1045,7 +1045,7 @@ components:
         description:
           $ref: "#/components/schemas/LocalizedValue"
         roomName:
-          $ref: "#/components/schemas/LocalizedValue"
+          $ref: "#/components/schemas/LocalizedValue"alwaysCheckIn
         roomNumber:
           type: string
           description: Appointment room number
@@ -1055,7 +1055,6 @@ components:
         visited:
           type: boolean
           description: true if the appoinemtment was visited
-
 
     AppointmentStatus:
       type: string
