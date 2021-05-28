@@ -1045,7 +1045,7 @@ components:
         description:
           $ref: "#/components/schemas/LocalizedValue"
         roomName:
-          $ref: "#/components/schemas/LocalizedValue"alwaysCheckIn
+          $ref: "#/components/schemas/LocalizedValue"
         roomNumber:
           type: string
           description: Appointment room number
