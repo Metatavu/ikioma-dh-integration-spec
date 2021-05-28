@@ -1049,7 +1049,7 @@ components:
         roomNumber:
           type: string
           description: Appointment room number
-        deskSignupRequired:
+        alwaysCheckIn:
           type: boolean
           description: true if it is mandatory to sign up for the appointment at the desk
 
