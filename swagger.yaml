@@ -1043,12 +1043,19 @@ components:
           type: string
           description: Web code which can be used to fetch data about the appointment or cancel it
         description:
+          nullable: true
           $ref: "#/components/schemas/LocalizedValue"
         roomName:
           $ref: "#/components/schemas/LocalizedValue"
         roomNumber:
           type: string
           description: Appointment room number
+        alwaysCheckIn:
+          type: boolean
+          description: true if it is mandatory to sign up for the appointment at the desk
+        visited:
+          type: boolean
+          description: true if the appoinemtment was visited
 
     AppointmentStatus:
       type: string
