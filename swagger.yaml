@@ -1052,6 +1052,9 @@ components:
         alwaysCheckIn:
           type: boolean
           description: true if it is mandatory to sign up for the appointment at the desk
+        visited:
+          type: boolean
+          description: true if the appoinemtment was visited
 
 
     AppointmentStatus:
@@ -1060,7 +1063,6 @@ components:
         - AVAILABLE
         - LOCKED
         - RESERVED
-        - CHECKED_IN
 
     Prescription:
       type: object
