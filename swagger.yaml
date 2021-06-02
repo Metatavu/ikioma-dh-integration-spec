@@ -832,21 +832,21 @@ paths:
 
   /v1/prescriptionPractitioners:
     get:
-      summary: Get practitioners that can give prescriptions
-      description: Gets practitioners that can give prescriptions
+      summary: Get practitioners that can renew prescriptions
+      description: Gets practitioners that can renew prescriptions
       tags:
         - Practitioners
         - Prescriptions
-      operationId: listPrescriptionRenewingPractitioners
+      operationId: listPrescriptionPractitioners
       responses:
         "200":
-          description: Practitioners that can issue prescriptions
+          description: Practitioners that can renew prescriptions
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PrescriptionRenewingPractitioner'
+                  $ref: '#/components/schemas/PrescriptionPractitioner'
         "400":
           description: Invalid request was sent to the server
           content:
@@ -1191,9 +1191,9 @@ components:
           $ref: string
           description: Arrival information for room
 
-    PrescriptionRenewingPractitioner:
+    PrescriptionPractitioner:
       type: object
-      description: Practitioner from whom prescriptions can be requested
+      description: Practitioner from whom prescription renewal can be requested
       required:
         - email
         - firstName
@@ -1208,4 +1208,3 @@ components:
         lastName:
           type: string
           description: Last name
-
