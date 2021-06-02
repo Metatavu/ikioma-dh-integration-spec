@@ -798,13 +798,55 @@ paths:
       operationId: listVaccinations
       responses:
         "200":
-          description: Patient prescriptions
+          description: Patient vaccinations
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Vaccination'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /v1/prescriptionPractitioners:
+    get:
+      summary: Get practitioners that can give prescriptions
+      description: Gets practitioners that can give prescriptions
+      tags:
+        - Practitioners
+        - Prescriptions
+      operationId: listPrescriptionRenewingPractitioners
+      responses:
+        "200":
+          description: Practitioners that can issue prescriptions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PrescriptionRenewingPractitioner'
         "400":
           description: Invalid request was sent to the server
           content:
@@ -1148,4 +1190,22 @@ components:
         roomArrivalInfo:
           $ref: string
           description: Arrival information for room
+
+    PrescriptionRenewingPractitioner:
+      type: object
+      description: Practitioner from whom prescriptions can be requested
+      required:
+        - email
+        - firstName
+        - lastName
+      properties:
+        email:
+          type: string
+          description: Email address
+        firstName:
+          type: string
+          description: First name
+        lastName:
+          type: string
+          description: Last name
 
