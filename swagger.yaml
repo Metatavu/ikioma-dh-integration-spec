@@ -1201,7 +1201,7 @@ components:
       properties:
         id:
           type: string
-          format: encrypted-id
+          format: uuid
           description: Unique practitioner ID
         email:
           type: string
