@@ -478,6 +478,95 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /v1/appointmentDates:
+    get:
+      summary: Lists appointment dates
+      description: Lists appointment dates
+      tags:
+        - AppointmentDates
+      operationId: list appointment dates
+      parameters:
+        - name: employerId
+          in: query
+          required: false
+          description: Employer id if patient is eligible for occupational health care services
+          schema:
+            type: string
+            format: encrypted-id
+        - name: areaId
+          in: query
+          required: false
+          description: Encrypted practitioner ID
+          schema:
+            type: string
+            format: encrypted-id
+        - name: clinicId
+          in: query
+          required: false
+          description: Encrypted clinic ID
+          schema:
+            type: string
+            format: encrypted-id
+        - name: medicalSpecialtyId
+          in: query
+          required: false
+          description: Encrypted clinic ID
+          schema:
+            type: string
+            format: encrypted-id
+        - name: practitionerId
+          in: query
+          required: false
+          description: Encrypted practitioner ID
+          schema:
+            type: string
+            format: encrypted-id
+        - name: startTime
+          in: query
+          required: true
+          description: From which date onwards the search is made
+          schema:
+            type: string
+        - name: endTime
+          in: query
+          required: true
+          description: Until which date the search is made
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of appointment dates
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AppointmentDate'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
   /v1/appointments:
     get:
       summary: Lists appointments
@@ -1046,6 +1135,19 @@ components:
         phoneNumber:
           type: string
           description: Phone number of the clinic
+
+    AppointmentDate:
+      type: object
+      description: Avaiable appointment date object
+      properties:
+        clinicId:
+          type: string
+          format: encrypted-id
+          description: Encrypted clinic ID
+        date:
+          type: string
+          description: The date of available appointment
+          format: date-time
 
     Appointment:
       type: object
