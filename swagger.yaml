@@ -1163,10 +1163,12 @@ components:
           description: Unique appointment ID
         status:
           $ref: "#/components/schemas/AppointmentStatus"
-        specialtyId:
-          type: string
-          format: encrypted-id
-          description: Encrypted specialty ID
+        specialtyIds:
+          type: array
+          items:
+            type: string
+            format: encrypted-id
+          description: All specialty IDs
         practitionerId:
           type: string
           format: encrypted-id
