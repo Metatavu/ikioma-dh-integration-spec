@@ -972,7 +972,7 @@ paths:
         - name: maxResults
           in: query
           required: false
-          description: If this is given only the given amount of latest prescriptions are retrieved
+          description: If this is given only the given amount of latest laboratory results are retrieved
           schema:
             type: integer
             format: int32
