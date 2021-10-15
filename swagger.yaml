@@ -982,6 +982,18 @@ paths:
           description: If this is given only the laboratory tests with given type (abbreviation) are retrieved
           schema:
             type: string
+        - name: startTime
+          in: query
+          required: false
+          description: From which date onwards the search is made. Includes the given date
+          schema:
+            type: string
+        - name: endTime
+          in: query
+          required: false
+          description: Until which date the search is made. Includes the given date
+          schema:
+            type: string
       responses:
         "200":
           description: Patient laboratory results
