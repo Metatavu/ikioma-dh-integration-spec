@@ -1396,6 +1396,8 @@ components:
         treatmentPlanText:
           type: string
           description: Text about treatment plan and/or that the practitioner might have written for the patient about the diagnosis
+        diagnosisEntry:
+          $ref: "#/components/schemas/DiagnosisEntry"
         journalTexts:
           type: array
           items:
@@ -1403,6 +1405,23 @@ components:
         patientVisitText:
           type: string
           description: The explanation text for the patient visit code
+
+    DiagnosisEntry:
+      type: object
+      description: Diagnosis entry data
+      properties:
+        ICD10Code:
+          type: string
+          description: ICD-10 code of the diagnosis if set
+        ICD10Description:
+          type: string
+          description: ICD-10 code description of the diagnosis if set
+        ICPC2Code:
+          type: string
+          description: ICPC-2 code of the diagnosis if set
+        ICPC2Description:
+          type: string
+          description: ICPC-2 code description of the diagnosis if set
 
     DiagnosisInfo:
       type: object
