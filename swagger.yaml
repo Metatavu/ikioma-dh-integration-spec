@@ -979,10 +979,9 @@ paths:
         - name: type
           in: query
           required: false
-          description: If this is given only the given amount of latest test results are retrieved
+          description: If this is given only the laboratory tests with given type (abbreviation) are retrieved
           schema:
-            type: integer
-            format: int32
+            type: string
         - name: startTime
           in: query
           required: false
