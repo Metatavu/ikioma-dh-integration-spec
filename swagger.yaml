@@ -961,6 +961,67 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /v1/diagnoses:
+    get:
+      summary: Get patients diagnoses
+      description: Gets patients diagnoses
+      tags:
+        - Diagnoses
+      operationId: listDiagnoses
+      parameters:
+        # - name: types
+        #   in: query
+        #   required: false
+        #   description: If this is given only the given amount of latest diagnoses are retrieved
+        #   schema:
+        #     type: integer
+        #     format: int32
+        - name: startTime
+          in: query
+          required: false
+          description: From which date onwards the search is made. Includes the given date
+          schema:
+            type: string
+        - name: endTime
+          in: query
+          required: false
+          description: Until which date the search is made. Includes the given date
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Patient diagnoses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Diagnosis'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 components:
   securitySchemes:
     bearerAuth:
@@ -1172,7 +1233,7 @@ components:
         practitionerId:
           type: string
           format: encrypted-id
-          description: Encrypted area ID
+          description: Encrypted practitioner ID
         clinicId:
           type: string
           format: encrypted-id
@@ -1292,7 +1353,7 @@ components:
           $ref: "#/components/schemas/LocalizedValue"
           description: Room name
         roomArrivalInfo:
-          $ref: string
+          $ref: "#/components/schemas/LocalizedValue"
           description: Arrival information for room
 
     PrescriptionPractitioner:
@@ -1316,3 +1377,87 @@ components:
         lastName:
           type: string
           description: Last name
+
+    Diagnosis:
+      type: object
+      description: Diagnosis data object
+      properties:
+        dynamicHealthId:
+          type: string
+          format: encrypted-id
+          description: Encrypted Dynamic Health ID
+        practitionerId:
+          type: string
+          format: encrypted-id
+          description: Encrypted practitioner ID
+        diagnosisTime:
+          type: string
+          format: date-time
+          description: The date and time the diagnosis was made
+        mainDiagnosis:
+          $ref: "#/components/schemas/DiagnosisInfo"
+        secondaryDiagnosis:
+          $ref: "#/components/schemas/DiagnosisInfo"
+        sickLeave:
+          $ref: "#/components/schemas/SickLeave"
+        treatmentPlanText:
+          type: string
+          description: Text about treatment plan and/or that the practitioner might have written for the patient about the diagnosis
+        journalTexts:
+          type: array
+          items:
+            $ref: "#/components/schemas/JournalText"
+        patientVisitText:
+          type: string
+          description: The explanation text for the patient visit code
+
+    DiagnosisInfo:
+      type: object
+      description: Diagnosis info
+      properties:
+        code:
+          type: string
+          description: Diagnosis code
+        name:
+          type: string
+          description: Diagnosis name
+
+    SickLeave:
+      type: object
+      description: Sick leave info
+      properties:
+        reasonCode:
+          $ref: "#/components/schemas/SickLeaveReasonCode"
+        start:
+          type: string
+          format: date
+          description: The start date of the sick leave
+        end:
+          type: string
+          format: date
+          description: The end date of the sick leave
+
+    SickLeaveReasonCode:
+      type: string
+      description: Defines the enumeration values for reason codes for a sick leave.
+      enum:
+        - ILLNESS
+        - OCCUPATIONAL_ACCIDENT
+        - COMMUTE_ACCIDENT
+        - OCCUPATIONAL_DISEASE
+        - LEISURE_ACCIDENT
+        - REHABILITATION
+        - TRAFFIC_ACCIDENT
+        - ON_OWN_NOTICE
+        - OTHER
+
+    JournalText:
+      type: object
+      description: Journal text object
+      properties:
+        header:
+          type: string
+          description: The header description of this text
+        text:
+          type: string
+          description: The text for this entry
