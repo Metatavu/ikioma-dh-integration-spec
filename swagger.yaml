@@ -969,13 +969,6 @@ paths:
         - Diagnoses
       operationId: listDiagnoses
       parameters:
-        # - name: types
-        #   in: query
-        #   required: false
-        #   description: If this is given only the given amount of latest diagnoses are retrieved
-        #   schema:
-        #     type: integer
-        #     format: int32
         - name: startTime
           in: query
           required: false
