@@ -1359,7 +1359,7 @@ components:
           $ref: "#/components/schemas/LocalizedValue"
           description: Room name
         roomArrivalInfo:
-          $ref: "#/components/schemas/LocalizedValue"
+          type: string
           description: Arrival information for room
 
     PrescriptionPractitioner:
