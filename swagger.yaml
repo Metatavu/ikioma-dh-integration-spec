@@ -961,6 +961,73 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /v1/laboratoryResults:
+    get:
+      summary: Get patients laboratory results
+      description: Gets patients laboratory results
+      tags:
+        - LaboratoryResults
+      operationId: listLaboratoryResults
+      parameters:
+        - name: maxResults
+          in: query
+          required: false
+          description: If this is given only the given amount of latest laboratory results are retrieved
+          schema:
+            type: integer
+            format: int32
+        - name: type
+          in: query
+          required: false
+          description: If this is given only the laboratory tests with given type (abbreviation) are retrieved
+          schema:
+            type: string
+        - name: startTime
+          in: query
+          required: false
+          description: From which date onwards the search is made. Includes the given date
+          schema:
+            type: string
+        - name: endTime
+          in: query
+          required: false
+          description: Until which date the search is made. Includes the given date
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Patient laboratory results
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LaboratoryResult"
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 components:
   securitySchemes:
     bearerAuth:
@@ -1292,7 +1359,7 @@ components:
           $ref: "#/components/schemas/LocalizedValue"
           description: Room name
         roomArrivalInfo:
-          $ref: string
+          type: string
           description: Arrival information for room
 
     PrescriptionPractitioner:
@@ -1316,3 +1383,60 @@ components:
         lastName:
           type: string
           description: Last name
+
+    LaboratoryResult:
+      type: object
+      description: Laboratory result object
+      properties:
+        dynamicHealthCode:
+          type: string
+          format: encrypted-id
+          description: Dynamic Health code
+        type:
+          type: string
+          description: The type of the laboratory test
+        name:
+          type: string
+          description: The examination name of the laboratory test
+        simplifiedName:
+          type: string
+          description: The simplified name of the laboratory test
+        description:
+          type: string
+          description: The description of the laboratory test
+        referralDate:
+          type: string
+          format: date
+          description: The date when the referral for the test was made
+        resultDate:
+          type: string
+          format: date
+          description: The date when the test result was analyzed
+        result:
+          type: string
+          description: The result of the laboratory test
+        resultText:
+          type: string
+          description: The result text of the laboratory test
+        unit:
+          type: string
+          description: The unit of result of the laboratory test
+        min:
+          type: string
+          description: The minimum value of the reference value of the laboratory test
+        max:
+          type: string
+          description: The maximum value of the reference value of the laboratory test
+        comparisonType:
+          $ref:  "#/components/schemas/TestResultComparisonType"
+        patientInstructionURL:
+          type: string
+          description: A URL for patient instructions of the examination if the examination contains it
+
+    TestResultComparisonType:
+      type: string
+      description: Defines the enumeration values for the laboratory test result comparison between min and max limits. This is applied only to numerical values
+      enum:
+        - LOWER
+        - HIGHER
+        - BETWEEN
