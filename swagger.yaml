@@ -1442,7 +1442,7 @@ components:
       type: object
       description: Diagnosis data object
       properties:
-        dynamicHealthId:
+        id:
           type: string
           format: encrypted-id
           description: Encrypted Dynamic Health ID
