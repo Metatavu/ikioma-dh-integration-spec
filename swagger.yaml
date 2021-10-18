@@ -1445,7 +1445,7 @@ components:
         id:
           type: string
           format: encrypted-id
-          description: Encrypted Dynamic Health ID
+          description: Encrypted diagnosis ID
         practitionerId:
           type: string
           format: encrypted-id
