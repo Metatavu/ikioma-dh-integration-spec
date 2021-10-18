@@ -1496,8 +1496,7 @@ components:
           format: date-time
           description: The date and time the diagnosis was made
         degreeOfCertainty:
-          type: string
-          description: The degree of certainty of diagnosis
+          $ref: "#/components/schemas/DiagnosisDegreeOfCertainty"
 
     DiagnosisInfo:
       type: object
