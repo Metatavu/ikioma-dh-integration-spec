@@ -1549,7 +1549,7 @@ components:
           type: string
           description: The text for this entry
 
-    DegreeOfCertaintyType:
+    DiagnosisDegreeOfCertainty:
       type: string
       description: Defines the enumeration values for the different values for degree of certainty on patient’s structured journal diagnosis in Medical Records Web Service
       enum:
