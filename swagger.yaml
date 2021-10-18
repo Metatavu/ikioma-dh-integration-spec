@@ -1464,7 +1464,9 @@ components:
           type: string
           description: Text about treatment plan and/or that the practitioner might have written for the patient about the diagnosis
         diagnosisEntry:
-          $ref: "#/components/schemas/DiagnosisEntry"
+          type: array
+          items:
+            $ref: "#/components/schemas/DiagnosisEntry"
         journalTexts:
           type: array
           items:
