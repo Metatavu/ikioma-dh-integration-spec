@@ -1446,10 +1446,9 @@ components:
           type: string
           format: encrypted-id
           description: Encrypted diagnosis ID
-        practitionerId:
+        practitionerName:
           type: string
-          format: encrypted-id
-          description: Encrypted practitioner ID
+          description: Name of the practitioner
         diagnosisTime:
           type: string
           format: date-time
