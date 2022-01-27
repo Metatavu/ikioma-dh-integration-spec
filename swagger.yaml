@@ -1604,6 +1604,9 @@ components:
         patientInstructionURL:
           type: string
           description: A URL for patient instructions of the examination if the examination contains it
+        parentId:
+          type: string
+          description: Id of parent lab result
 
     TestResultComparisonType:
       type: string
