@@ -1606,6 +1606,7 @@ components:
           description: A URL for patient instructions of the examination if the examination contains it
         parentId:
           type: string
+          format: encrypted-id
           description: Id of parent lab result
 
     TestResultComparisonType:
